@@ -93,41 +93,23 @@
       text-align: center;
     }
 
-    /* Estilo das Abas */
-    .tabs {
-      display: flex;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .tabs li {
-      margin-right: 10px;
-      cursor: pointer;
-      padding: 10px 20px;
-      background-color: #ffaa00;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-    }
-
-    .tabs li.active {
-      background-color: #ffcc00;
-    }
-
     /* Área do Relatório Power BI */
-    .tab-content {
-      display: none;
+    .relatorio-powerbi {
+      opacity: 0;
+      visibility: hidden;
       width: 90%;
       max-width: 1000px;
       height: 80vh;
       margin: 30px auto;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
     }
 
-    .tab-content.active {
-      display: block;
+    .relatorio-powerbi.ativo {
+      opacity: 1;
+      visibility: visible;
     }
 
-    .tab-content iframe {
+    .relatorio-powerbi iframe {
       width: 100%;
       height: 100%;
       border: none;
@@ -203,49 +185,37 @@
     <button><a href="#">Suporte BI</a></button>
   </div>
 
-  <!-- Sistema de Abas -->
-  <ul class="tabs">
-    <li class="active" onclick="mostrarRelatorio('vendas')">Vendas</li>
-    <li onclick="mostrarRelatorio('vendedores')">Vendedores</li>
-  </ul>
-
-  <!-- Conteúdo das Abas -->
-  <div id="tabContent">
-    <!-- Relatório de Vendas -->
-    <div class="tab-content active" id="vendas">
-      <iframe 
-        title="BI Vendas"
-        src="https://app.powerbi.com/view?r=eyJrIjoiNTQ1ZTNkYTUtYjljNi00NTBhLTgzYTMtMzdkNDg4NWQ3ZjdhIiwidCI6IjZiYzQzNjNiLTBiNTAtNDczNi05NWRiLTkxNGQ3MWUxN2FjYyJ9 "
-        allowfullscreen>
-      </iframe>
-    </div>
-
-    <!-- Relatório de Vendedores -->
-    <div class="tab-content" id="vendedores">
-      <iframe 
-        title="BI Vendedores"
-        src="https://app.powerbi.com/view?r=eyJrIjoiMzFkZTI5YzktNmVjZC00Yzk4LWEwMWMtZWI3M2JjMjg3YTAxIiwidCI6IjZiYzQzNjNiLTBiNTAtNDczNi05NWRiLTkxNGQ3MWUxN2FjYyJ9 "
-        allowfullscreen>
-      </iframe>
-    </div>
+  <!-- Área para exibir os relatórios -->
+  <div class="relatorio-powerbi" id="relatorioVendas">
+    <iframe 
+      title="BI Vendas"
+      src="https://app.powerbi.com/view?r=eyJrIjoiNTQ1ZTNkYTUtYjljNi00NTBhLTgzYTMtMzdkNDg4NWQ3ZjdhIiwidCI6IjZiYzQzNjNiLTBiNTAtNDczNi05NWRiLTkxNGQ3MWUxN2FjYyJ9 "
+      allowfullscreen>
+    </iframe>
   </div>
 
-  <!-- Script para controlar as abas -->
+  <div class="relatorio-powerbi" id="relatorioVendedores">
+    <iframe 
+      title="BI Vendedores"
+      src="https://app.powerbi.com/view?r=eyJrIjoiMzFkZTI5YzktNmVjZC00Yzk4LWEwMWMtZWI3M2JjMjg3YTAxIiwidCI6IjZiYzQzNjNiLTBiNTAtNDczNi05NWRiLTkxNGQ3MWUxN2FjYyJ9 "
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- Script para mostrar o relatório -->
   <script>
-    function mostrarRelatorio(tabId) {
-      // Remove a classe 'active' de todas as abas
-      const tabs = document.querySelectorAll('.tabs li');
-      tabs.forEach(tab => tab.classList.remove('active'));
+    function mostrarRelatorio(id) {
+      // Esconde ambos
+      document.getElementById('relatorioVendas').classList.remove('ativo');
+      document.getElementById('relatorioVendedores').classList.remove('ativo');
 
-      // Adiciona a classe 'active' à aba clicada
-      document.querySelector(`.tabs li[onclick*="${tabId}"]`).classList.add('active');
+      // Mostra apenas o selecionado com fade in
+      setTimeout(() => {
+        document.getElementById(`relatorio${id.charAt(0).toUpperCase() + id.slice(1)}`).classList.add('ativo');
+      }, 50);
 
-      // Oculta todos os conteúdos de abas
-      const contents = document.querySelectorAll('.tab-content');
-      contents.forEach(content => content.style.display = 'none');
-
-      // Mostra o conteúdo da aba selecionada
-      document.getElementById(tabId).style.display = 'block';
+      // Rola até o relatório (opcional)
+      document.getElementById(`relatorio${id.charAt(0).toUpperCase() + id.slice(1)}`).scrollIntoView({ behavior: 'smooth' });
     }
   </script>
 
