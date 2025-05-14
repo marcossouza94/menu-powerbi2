@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Menu Power BI</title>
   <style>
     /* Estilo Geral */
@@ -33,14 +33,6 @@
       height: 100%;
       z-index: 0;
       pointer-events: none;
-    }
-
-    /* Conteúdo principal acima da marca d'água */
-    .menu, .suporte, .relatorio-powerbi {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 800px;
     }
 
     /* Estilo do menu */
@@ -93,27 +85,45 @@
       text-align: center;
     }
 
-    /* Área do Relatório Power BI */
-    .relatorio-powerbi {
-      opacity: 0;
-      visibility: hidden;
-      width: 90%;
-      max-width: 1000px;
-      height: 80vh;
-      margin: 30px auto;
-      transition: opacity 0.6s ease, visibility 0.6s ease;
-    }
-
-    .relatorio-powerbi.ativo {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .relatorio-powerbi iframe {
+    /* Estilo do Modal Overlay */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 1000px;
+      max-height: 90vh;
+      position: relative;
+    }
+
+    .modal-content iframe {
+      width: 100%;
+      height: 70vh;
       border: none;
       border-radius: 8px;
+    }
+
+    .fechar-modal {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.5rem;
+      color: #ffaa00;
+      cursor: pointer;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -126,9 +136,9 @@
     <div class="area">
       <h2>Área Comercial</h2>
       <div class="buttons">
-        <button onclick="mostrarRelatorio('vendas')">Vendas</button>
+        <button onclick="abrirModal('vendas')">Vendas</button>
         <button><a href="#">Planejamento Vendas</a></button>
-        <button onclick="mostrarRelatorio('vendedores')">Vendedor</button>
+        <button onclick="abrirModal('vendedores')">Vendedor</button>
       </div>
     </div>
 
@@ -188,38 +198,43 @@
     <button><a href="#">Suporte BI</a></button>
   </div>
 
-  <!-- Área para exibir os relatórios -->
-  <div class="relatorio-powerbi" id="relatorioVendas">
-    <iframe 
-      title="BI Vendas"
-      src="https://app.powerbi.com/view?r=eyJrIjoiNTQ1ZTNkYTUtYjljNi00NTBhLTgzYTMtMzdkNDg4NWQ3ZjdhIiwidCI6IjZiYzQzNjNiLTBiNTAtNDczNi05NWRiLTkxNGQ3MWUxN2FjYyJ9 "
-      allowfullscreen>
-    </iframe>
+  <!-- Modal Overlay -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content" id="modalContent">
+      <span class="fechar-modal" onclick="fecharModal()">✖</span>
+      <iframe id="modalIframe" src="" allowfullscreen></iframe>
+    </div>
   </div>
 
-  <div class="relatorio-powerbi" id="relatorioVendedores">
-    <iframe 
-      title="BI Vendedores"
-      src="https://app.powerbi.com/view?r=eyJrIjoiMzFkZTI5YzktNmVjZC00Yzk4LWEwMWMtZWI3M2JjMjg3YTAxIiwidCI6IjZiYzQzNjNiLTBiNTAtNDczNi05NWRiLTkxNGQ3MWUxN2FjYyJ9 "
-      allowfullscreen>
-    </iframe>
-  </div>
-
-  <!-- Script para mostrar o relatório -->
+  <!-- Script para controlar o modal -->
   <script>
-    function mostrarRelatorio(id) {
-      // Esconde ambos os relatórios
-      document.getElementById('relatorioVendas').classList.remove('ativo');
-      document.getElementById('relatorioVendedores').classList.remove('ativo');
+    const modal = document.getElementById("modalOverlay");
+    const iframe = document.getElementById("modalIframe");
 
-      // Mostra o relatório correspondente com fade in
-      setTimeout(() => {
-        document.getElementById(`relatorio${id.charAt(0).toUpperCase() + id.slice(1)}`).classList.add('ativo');
-      }, 50);
+    function abrirModal(relatorio) {
+      let src = "";
 
-      // Rola até o relatório (opcional)
-      document.getElementById(`relatorio${id.charAt(0).toUpperCase() + id.slice(1)}`).scrollIntoView({ behavior: 'smooth' });
+      if (relatorio === "vendas") {
+        src = "https://app.powerbi.com/view?r=eyJrIjoiNTQ1ZTNkYTUtYjljNi00NTBhLTgzYTMtMzdkNDg4NWQ3ZjdhIiwidCI6IjZiYzQzNjNiLTBiNTAtNDczNi05NWRiLTkxNGQ3MWUxN2FjYyJ9 ";
+      } else if (relatorio === "vendedores") {
+        src = "https://app.powerbi.com/view?r=eyJrIjoiMzFkZTI5YzktNmVjZC00Yzk4LWEwMWMtZWI3M2JjMjg3YTAxIiwidCI6IjZiYzQzNjNiLTBiNTAtNDczNi05NWRiLTkxNGQ3MWUxN2FjYyJ9 ";
+      }
+
+      iframe.src = src;
+      modal.style.display = "flex";
     }
+
+    function fecharModal() {
+      modal.style.display = "none";
+      iframe.src = ""; // Limpa para evitar carregamento desnecessário
+    }
+
+    // Fecha o modal ao clicar fora do conteúdo
+    window.onclick = function(event) {
+      if (event.target === modal) {
+        fecharModal();
+      }
+    };
   </script>
 
 </body>
