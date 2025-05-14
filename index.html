@@ -132,6 +132,9 @@
       </div>
     </div>
 
+    <!-- Áreas restantes (Suprimentos, Financeira, etc.) -->
+    <!-- Mantidas conforme seu código original -->
+
     <!-- Área Suprimentos -->
     <div class="area">
       <h2>Área Suprimentos</h2>
@@ -205,11 +208,11 @@
   <!-- Script para mostrar o relatório -->
   <script>
     function mostrarRelatorio(id) {
-      // Esconde ambos
+      // Esconde ambos os relatórios
       document.getElementById('relatorioVendas').classList.remove('ativo');
       document.getElementById('relatorioVendedores').classList.remove('ativo');
 
-      // Mostra apenas o selecionado com fade in
+      // Mostra o relatório correspondente com fade in
       setTimeout(() => {
         document.getElementById(`relatorio${id.charAt(0).toUpperCase() + id.slice(1)}`).classList.add('ativo');
       }, 50);
