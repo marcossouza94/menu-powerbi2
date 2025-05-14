@@ -1,277 +1,163 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Menu Power BI</title>
-
-<style>
-
-/* Estilo Geral */
-
-body {
-
-margin: 0;
-
-font-family: Arial, sans-serif;
-
-background-color: #121212;
-
-color: #ffffff;
-
-display: flex;
-
-flex-direction: column;
-
-align-items: center;
-
-justify-content: center;
-
-min-height: 100vh;
-
-}
-
-
-/* Estilo da imagem central */
-
-#logo {
-
-margin-bottom: 20px;
-
-max-width: 200px;
-
-}
-
-
-/* Estilo do menu */
-
-.menu {
-
-width: 80%;
-
-max-width: 600px;
-
-margin: 20px 0;
-
-}
-
-
-.area {
-
-margin-bottom: 30px;
-
-}
-
-
-.area h2 {
-
-font-size: 1.5rem;
-
-color: #ffaa00;
-
-margin-bottom: 15px;
-
-}
-
-
-.area .buttons {
-
-display: flex;
-
-flex-direction: column;
-
-gap: 10px;
-
-}
-
-
-/* Estilo dos botões */
-
-button {
-
-background-color: #ffaa00;
-
-border: none;
-
-padding: 10px 20px;
-
-border-radius: 5px;
-
-color: #121212;
-
-font-size: 1rem;
-
-cursor: pointer;
-
-text-align: left;
-
-}
-
-
-button:hover {
-
-background-color: #ffcc00;
-
-}
-
-
-button a {
-
-text-decoration: none;
-
-color: inherit;
-
-}
-
-
-/* Estilo do botão separado */
-
-.suporte {
-
-margin-top: 20px;
-
-text-align: center;
-
-}
-
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Power BI</title>
+  <style>
+    /* Estilo Geral */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Marca d'água no fundo */
+    body::before {
+      content: "";
+      background: url('wsbi-logo.png') no-repeat center center;
+      background-size: 300px;
+      opacity: 0.05;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Conteúdo principal acima da marca d'água */
+    .menu, .suporte {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Estilo do menu */
+    .menu {
+      width: 80%;
+      max-width: 600px;
+      margin: 20px 0;
+    }
+
+    .area {
+      margin-bottom: 30px;
+    }
+
+    .area h2 {
+      font-size: 1.5rem;
+      color: #ffaa00;
+      margin-bottom: 15px;
+    }
+
+    .area .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Estilo dos botões */
+    button {
+      background-color: #ffaa00;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: #121212;
+      font-size: 1rem;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    button:hover {
+      background-color: #ffcc00;
+    }
+
+    button a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .suporte {
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- Imagem central -->
-
-<img src="wsbi-logo.jpg" alt="WSBI Logo" id="logo">
-
-
-<!-- Menu -->
-
-<div class="menu">
-
-
-<!-- Área Comercial -->
-
-<div class="area">
-
-<h2>Área Comercial</h2>
-
-<div class="buttons">
-
-<button><a href="#">Vendas</a></button>
-
-<button><a href="#">Planejamento Vendas</a></button>
-
-<button><a href="#">Vendedor</a></button>
-
-</div>
-
-</div>
-
-
-<!-- Área Suprimentos -->
-
-<div class="area">
-
-<h2>Área Suprimentos</h2>
-
-<div class="buttons">
-
-<button><a href="#">Compras</a></button>
-
-<button><a href="#">Estoques</a></button>
-
-</div>
-
-</div>
-
-
-<!-- Área Financeira -->
-
-<div class="area">
-
-<h2>Área Financeira</h2>
-
-<div class="buttons">
-
-<button><a href="#">Contas Pagar</a></button>
-
-<button><a href="#">Contas Receber</a></button>
-
-<button><a href="#">Fluxo de Caixa</a></button>
-
-<button><a href="#">Saldo Bancos</a></button>
-
-</div>
-</div>
-
-
-<!-- Área Contábil -->
-
-<div class="area">
-
-<h2>Área Contábil</h2>
-
-<div class="buttons">
-
-<button><a href="#">Balanço e DRE</a></button>
-
-<button><a href="#">Controle Despesas</a></button>
-
-</div>
-
-</div>
-
-
-<!-- Área Produção -->
-
-<div class="area">
-
-<h2>Área Produção</h2>
-
-<div class="buttons">
-
-<button><a href="#">Manufatura</a></button>
-
-</div>
-
-</div>
-
-
-<!-- Área Recursos Humanos -->
-
-<div class="area">
-
-<h2>Área Recursos Humanos</h2>
-
-<div class="buttons">
-
-<button><a href="#">Recursos Humanos</a></button>
-
-<button><a href="#">Férias</a></button>
-
-<button><a href="#">Exames Periódicos</a></button>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- Suporte BI -->
-
-<div class="suporte">
-
-<button><a href="#">Suporte BI</a></button>
-
-</div>
+  <!-- Menu -->
+  <div class="menu">
+
+    <!-- Área Comercial -->
+    <div class="area">
+      <h2>Área Comercial</h2>
+      <div class="buttons">
+        <button><a href="#">Vendas</a></button>
+        <button><a href="#">Planejamento Vendas</a></button>
+        <button><a href="#">Vendedor</a></button>
+      </div>
+    </div>
+
+    <!-- Área Suprimentos -->
+    <div class="area">
+      <h2>Área Suprimentos</h2>
+      <div class="buttons">
+        <button><a href="#">Compras</a></button>
+        <button><a href="#">Estoques</a></button>
+      </div>
+    </div>
+
+    <!-- Área Financeira -->
+    <div class="area">
+      <h2>Área Financeira</h2>
+      <div class="buttons">
+        <button><a href="#">Contas Pagar</a></button>
+        <button><a href="#">Contas Receber</a></button>
+        <button><a href="#">Fluxo de Caixa</a></button>
+        <button><a href="#">Saldo Bancos</a></button>
+      </div>
+    </div>
+
+    <!-- Área Contábil -->
+    <div class="area">
+      <h2>Área Contábil</h2>
+      <div class="buttons">
+        <button><a href="#">Balanço e DRE</a></button>
+        <button><a href="#">Controle Despesas</a></button>
+      </div>
+    </div>
+
+    <!-- Área Produção -->
+    <div class="area">
+      <h2>Área Produção</h2>
+      <div class="buttons">
+        <button><a href="#">Manufatura</a></button>
+      </div>
+    </div>
+
+    <!-- Área Recursos Humanos -->
+    <div class="area">
+      <h2>Área Recursos Humanos</h2>
+      <div class="buttons">
+        <button><a href="#">Recursos Humanos</a></button>
+        <button><a href="#">Férias</a></button>
+        <button><a href="#">Exames Periódicos</a></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Suporte BI -->
+  <div class="suporte">
+    <button><a href="#">Suporte BI</a></button>
+  </div>
 
 </body>
-
 </html>
