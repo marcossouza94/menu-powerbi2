@@ -93,23 +93,41 @@
       text-align: center;
     }
 
+    /* Estilo das Abas */
+    .tabs {
+      display: flex;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .tabs li {
+      margin-right: 10px;
+      cursor: pointer;
+      padding: 10px 20px;
+      background-color: #ffaa00;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .tabs li.active {
+      background-color: #ffcc00;
+    }
+
     /* Área do Relatório Power BI */
-    .relatorio-powerbi {
-      opacity: 0;
-      visibility: hidden;
+    .tab-content {
+      display: none;
       width: 90%;
       max-width: 1000px;
       height: 80vh;
       margin: 30px auto;
-      transition: opacity 0.6s ease, visibility 0.6s ease;
     }
 
-    .relatorio-powerbi.ativo {
-      opacity: 1;
-      visibility: visible;
+    .tab-content.active {
+      display: block;
     }
 
-    .relatorio-powerbi iframe {
+    .tab-content iframe {
       width: 100%;
       height: 100%;
       border: none;
@@ -126,9 +144,9 @@
     <div class="area">
       <h2>Área Comercial</h2>
       <div class="buttons">
-        <button onclick="mostrarRelatorio()">Vendas</button>
+        <button onclick="mostrarRelatorio('vendas')">Vendas</button>
         <button><a href="#">Planejamento Vendas</a></button>
-        <button><a href="#">Vendedor</a></button>
+        <button onclick="mostrarRelatorio('vendedores')">Vendedor</button>
       </div>
     </div>
 
@@ -185,25 +203,49 @@
     <button><a href="#">Suporte BI</a></button>
   </div>
 
-  <!-- Área para exibir o Power BI -->
-  <div class="relatorio-powerbi" id="relatorioPowerBI">
-    <iframe 
-      title="BI Vendas"
-      src="https://app.powerbi.com/view?r=eyJrIjoiNTQ1ZTNkYTUtYjljNi00NTBhLTgzYTMtMzdkNDg4NWQ3ZjdhIiwidCI6IjZiYzQzNjNiLTBiNTAtNDczNi05NWRiLTkxNGQ3MWUxN2FjYyJ9 "
-      allowfullscreen>
-    </iframe>
+  <!-- Sistema de Abas -->
+  <ul class="tabs">
+    <li class="active" onclick="mostrarRelatorio('vendas')">Vendas</li>
+    <li onclick="mostrarRelatorio('vendedores')">Vendedores</li>
+  </ul>
+
+  <!-- Conteúdo das Abas -->
+  <div id="tabContent">
+    <!-- Relatório de Vendas -->
+    <div class="tab-content active" id="vendas">
+      <iframe 
+        title="BI Vendas"
+        src="https://app.powerbi.com/view?r=eyJrIjoiNTQ1ZTNkYTUtYjljNi00NTBhLTgzYTMtMzdkNDg4NWQ3ZjdhIiwidCI6IjZiYzQzNjNiLTBiNTAtNDczNi05NWRiLTkxNGQ3MWUxN2FjYyJ9 "
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <!-- Relatório de Vendedores -->
+    <div class="tab-content" id="vendedores">
+      <iframe 
+        title="BI Vendedores"
+        src="https://app.powerbi.com/view?r=eyJrIjoiMzFkZTI5YzktNmVjZC00Yzk4LWEwMWMtZWI3M2JjMjg3YTAxIiwidCI6IjZiYzQzNjNiLTBiNTAtNDczNi05NWRiLTkxNGQ3MWUxN2FjYyJ9 "
+        allowfullscreen>
+      </iframe>
+    </div>
   </div>
 
-  <!-- Script para mostrar o relatório -->
+  <!-- Script para controlar as abas -->
   <script>
-    function mostrarRelatorio() {
-      const relatorio = document.getElementById('relatorioPowerBI');
+    function mostrarRelatorio(tabId) {
+      // Remove a classe 'active' de todas as abas
+      const tabs = document.querySelectorAll('.tabs li');
+      tabs.forEach(tab => tab.classList.remove('active'));
 
-      // Adiciona a classe ativa para iniciar a animação
-      relatorio.classList.add('ativo');
+      // Adiciona a classe 'active' à aba clicada
+      document.querySelector(`.tabs li[onclick*="${tabId}"]`).classList.add('active');
 
-      // Rola até o relatório com efeito suave
-      relatorio.scrollIntoView({ behavior: 'smooth' });
+      // Oculta todos os conteúdos de abas
+      const contents = document.querySelectorAll('.tab-content');
+      contents.forEach(content => content.style.display = 'none');
+
+      // Mostra o conteúdo da aba selecionada
+      document.getElementById(tabId).style.display = 'block';
     }
   </script>
 
